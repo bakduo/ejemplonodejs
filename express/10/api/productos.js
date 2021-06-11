@@ -1,74 +1,46 @@
-
 import { Producto } from "../model/producto.js";
 import Archivo from '../util/archivo.js';
 
 const archivo = new Archivo();
 
-//duplica codigo, MAL
-
-// export const getItemsRender = (req, res) => {
-
-//     try {
-        
-//         const datos = archivo.read();
-//         datos.then(data=>{
-//             const cantidad = archivo.getSize();
-//             if (cantidad===0){
-//                 return res.render("layouts/productos",{
-//                     productos:null,
-//                     state:false
-//                 });
-//             }
-
-//             return res.render("layouts/productos",{
-//                 productos:data,
-//                 state:true
-//             });
-//         });    
-//     } catch (error) {
-//         return res.status(500).json(error)
-//     }
-
-// }
-
 export const getItems = (req, res) => {
-
     try {
 
-        const datos = archivo.read();
-        datos.then(data=>{
-            const cantidad = archivo.getSize();
-            if (cantidad===0){
+        const cantidad = archivo.getSize();
 
-                //Logica en la ruta, por ahora sin SPA client-side, es accesible.
-                
-                if (req.rendercustom){
-                    return res.render("layouts/productos",{
-                                            productos:null,
-                                            state:false
-                                        });
-                }else{
-                    return res.status(400).json({error:'No hay productos cargados'});
-                }
-                
-            }
+        const data = archivo.getItems();
+
+        if (cantidad===0){
+
+            //Logica en la ruta, por ahora sin SPA client-side, es accesible.
+            
             if (req.rendercustom){
-                return res.render("layouts/productos",{
-                                    productos:data,
-                                    state:true
-                                });
+                return res.render("productos",{
+                                        productos:null,
+                                        state:false
+                                    });
             }else{
-                return res.status(200).json(data);
+                return res.status(400).json({error:'No hay productos cargados'});
             }
             
-        });    
+        }
+        
+        if (req.rendercustom){
+            return res.render("productos",{
+                                productos:data,
+                                state:true
+                            });
+        }else{
+            return res.status(200).json(data);
+        }
+        
+        
     } catch (error) {
         return res.status(500).json(error)
     }
-
 }
 
-export const postItem = async (req, res) => {
+export const postItem = (req, res) => {
     
     try {
         const producto = req.body;
@@ -79,10 +51,10 @@ export const postItem = async (req, res) => {
             p2.setTitle(producto.title);
             //Disclaimer.. Este parametro ID produce inconsistencia solo debe ser tomado como ejemplo de prueba NADA MAS.
             p2.setId(archivo.getSize());
-            const tmp1 = await archivo.save(p2);
+            const tmp1 = archivo.save(p2);
             if (tmp1){    
                 if (req.rendercustom){
-                    return res.render("layouts/add_producto");
+                    return res.render("add_producto");
                 }else{
                     return res.status(200).json(tmp1);
                 }
@@ -95,13 +67,11 @@ export const postItem = async (req, res) => {
     }
 }
 
-export const getItem = async (req, res) => {
+export const getItem = (req, res) => {
     
     try {
 
         if (req.params.id){
-            
-            await archivo.read();
             
             const IDP = Number(req.params.id);
 
@@ -124,7 +94,6 @@ export const updateItem = async (req,res) => {
     try {
         if (req.params.id){
             
-            await archivo.read();
             const producto = req.body;
             const IDP = Number(req.params.id);
             const pTmp = new Producto();
@@ -136,12 +105,7 @@ export const updateItem = async (req,res) => {
             
             const update = archivo.updateById(IDP,pTmp);
             if (update){
-                const tmp1 = await archivo.sync();
-                if (tmp1){
-                    return res.status(200).json(update);
-                }else{
-                    return res.status(500).json({error:'Falla al realizar el update del producto'})  
-                }
+                return res.status(200).json(update);
             }else{
                 return res.status(400).json({error:'Producto no encontrado'})
             }
@@ -157,18 +121,11 @@ export const deleteItem = async (req,res) => {
     try {
         if (req.params.id){
             
-            await archivo.read();
             const IDP = Number(req.params.id);
             const indexDelete = archivo.deleteById(IDP);
             
             if (indexDelete!==null){
-            
-                const tmp1 = await archivo.sync();
-                if (tmp1){
-                    return res.status(200).json(indexDelete);
-                }else{
-                    return res.status(500).json({error:'Falla al realizar el delete del producto'})  
-                }
+                return res.status(200).json(indexDelete);
             }else{
                 return res.status(400).json({error:'Producto no encontrado para eliminar'})
             }

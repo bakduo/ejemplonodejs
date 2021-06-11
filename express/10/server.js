@@ -12,8 +12,6 @@ import path from 'path';
 
 const __dirname = path.resolve();
 
-//import loadInitial from './util/load.js';
-
 //creo una app de tipo express
 const app = express();
 
