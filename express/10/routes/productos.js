@@ -1,11 +1,11 @@
+const express = require('express');
 
-import express from 'express';
+const {getItems,getItem,postItem, updateItem, deleteItem} = require('../api/productos.js');
+const CustomOrigin = require('../util/middleware');
 
-import {getItems,getItem,postItem, updateItem, deleteItem} from '../api/productos.js';
+const functionOrigin = new CustomOrigin();
 
-import { checkOrigin } from '../util/middleware.js';
-
-var routerItems = express.Router();
+const routerItems = express.Router();
 
 routerItems.get('/addproducto',(req, res) => {
     try {
@@ -16,14 +16,14 @@ routerItems.get('/addproducto',(req, res) => {
 });
 
 //Rutas por default muestro los productos
-routerItems.get("/",checkOrigin,getItems);
-routerItems.get("/productos/vista",checkOrigin,getItems);
+routerItems.get("/",functionOrigin.checkOrigin,getItems);
+routerItems.get("/productos/vista",functionOrigin.checkOrigin,getItems);
 
 //Apis crud de antes
-routerItems.get('/listar',checkOrigin, getItems);
+routerItems.get('/listar',functionOrigin.checkOrigin, getItems);
 routerItems.get('/listar/:id', getItem);
-routerItems.post('/guardar',checkOrigin,postItem)
+routerItems.post('/guardar',functionOrigin.checkOrigin,postItem)
 routerItems.put('/actualizar/:id',updateItem)
 routerItems.delete('/borrar/:id',deleteItem)
 
-export default routerItems;
+module.exports = routerItems;

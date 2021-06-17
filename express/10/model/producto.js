@@ -1,4 +1,4 @@
-export class Producto {
+class Producto {
   
    constructor(){
       this.title='';
@@ -26,3 +26,5 @@ export class Producto {
   }
 
 }
+
+module.exports = Producto

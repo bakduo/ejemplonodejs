@@ -1,16 +1,13 @@
-import { Producto } from "../model/producto.js";
-import Archivo from '../util/archivo.js';
+const ProductService = require('../services/product-sevice.js');
 
-const archivo = new Archivo();
+const service = new ProductService();
 
-export const getItems = (req, res) => {
+const getItems = (req, res) => {
     try {
 
-        const cantidad = archivo.getSize();
+        const items = service.getProductos(); 
 
-        const data = archivo.getItems();
-
-        if (cantidad===0){
+        if (items==null){
 
             //Logica en la ruta, por ahora sin SPA client-side, es accesible.
             
@@ -22,16 +19,15 @@ export const getItems = (req, res) => {
             }else{
                 return res.status(400).json({error:'No hay productos cargados'});
             }
-            
         }
-        
+
         if (req.rendercustom){
             return res.render("productos",{
-                                productos:data,
+                                productos:items,
                                 state:true
                             });
         }else{
-            return res.status(200).json(data);
+            return res.status(200).json(items);
         }
         
         
@@ -40,98 +36,67 @@ export const getItems = (req, res) => {
     }
 }
 
-export const postItem = (req, res) => {
+const postItem = (req, res) => {
     
     try {
-        const producto = req.body;
+
+        const producto = service.addProducto(req.body);
+
         if (producto){
-            const p2 = new Producto();
-            p2.setPrice(producto.price);
-            p2.setThumbail(producto.thumbail);
-            p2.setTitle(producto.title);
-            //Disclaimer.. Este parametro ID produce inconsistencia solo debe ser tomado como ejemplo de prueba NADA MAS.
-            p2.setId(archivo.getSize());
-            const tmp1 = archivo.save(p2);
-            if (tmp1){    
-                if (req.rendercustom){
-                    return res.render("add_producto");
-                }else{
-                    return res.status(200).json(tmp1);
-                }
+            if (req.rendercustom){
+                return res.render("add_producto");
+            }else{
+                return res.status(200).json(producto);
             }
-            return res.status(500).json({error:'Error al guardar el producto.'});
         }
+
+        return res.status(500).json({error:'Error al guardar el producto.'});
         
     } catch (error) {
         return res.json({error:error});
     }
 }
 
-export const getItem = (req, res) => {
+const getItem = (req, res) => {
     
     try {
 
-        if (req.params.id){
-            
-            const IDP = Number(req.params.id);
-
-            const producto = archivo.getId(IDP);
-
-            if (producto){
-                return res.status(200).json(producto);
-            }else{
-                return res.status(400).json({error:'Producto no encontrado'})
-            }
+        const producto = service.getPruducto(req.params.id);
+        if (producto){
+            return res.status(200).json(producto);
         }
-        return res.json({error:'No hay parametro de ID'});
+        return res.status(400).json({error:'Producto no encontrado'})
             
     } catch (error) {
         return res.json({error:error});
     }
 }
 
-export const updateItem = async (req,res) => {
+const updateItem = async (req,res) => {
     try {
-        if (req.params.id){
-            
-            const producto = req.body;
-            const IDP = Number(req.params.id);
-            const pTmp = new Producto();
-            
-            pTmp.setPrice(producto.price);
-            pTmp.setThumbail(producto.thumbail);
-            pTmp.setTitle(producto.title);
-            pTmp.setId(IDP);
-            
-            const update = archivo.updateById(IDP,pTmp);
-            if (update){
-                return res.status(200).json(update);
-            }else{
-                return res.status(400).json({error:'Producto no encontrado'})
-            }
+
+        const update = service.updateProducto(req.params.id);
+        if (update){
+            return res.status(200).json(update);
         }
-        return res.json({error:'No hay parametro de ID para actualizar'}); 
+        return res.status(400).json({error:'Producto no encontrado'})
+
     } catch (error) {
         return res.json({error:error}); 
     }
 }
 
 
-export const deleteItem = async (req,res) => {
+const deleteItem = async (req,res) => {
     try {
-        if (req.params.id){
-            
-            const IDP = Number(req.params.id);
-            const indexDelete = archivo.deleteById(IDP);
-            
-            if (indexDelete!==null){
-                return res.status(200).json(indexDelete);
-            }else{
-                return res.status(400).json({error:'Producto no encontrado para eliminar'})
-            }
+        const indexDelete = service.deleteProducto(Number(req.params.id));
+        if (indexDelete!==null){
+            return res.status(200).json(indexDelete);
         }
-        return res.json({error:'No hay parametro de ID para eliminar'}); 
+        return res.status(400).json({error:'Producto no encontrado para eliminar'})
     } catch (error) {
         return res.json({error:error}); 
     }
 }
+
+module.exports = {getItem,getItems,updateItem,deleteItem,postItem}

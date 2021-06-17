@@ -2,21 +2,22 @@
  * ejemplo de un servidor http con express
  */
 
-import express from 'express';
+//Migro app hacia commonjs en lugar de modules porque socket io como modules type no me funciono bien.
+const express = require('express');
  
-import routerProductos from "./routes/productos.js";
+const routerProductos = require('./routes/productos');
 
-import handlebars from "express-handlebars";
+const handlebars = require('express-handlebars');
 
-import path from 'path';
-
-const __dirname = path.resolve();
+const WSocket = require("./util/wsocket");
 
 //creo una app de tipo express
 const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 // indico donde estan los archivos estaticos
-//app.use(express.static('public'));
+app.use(express.static('public'));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -32,19 +33,24 @@ app.engine("hbs",
     }) 
 );
 
-app.use('/',routerProductos);
+//app.use('/',routerProductos);//Ahora usa public para poder tener socketio client-side
 app.use('/api/productos',routerProductos);
 app.set("view engine","hbs");
 app.set("views","./views");
 
 const puerto = process.env.PORT || 8080;
 
+//wrapper TODO fix si crece
+const customsocket = new WSocket(io);
+
+customsocket.init();
+
 // pongo a escuchar el servidor en el puerto indicado
-const server = app.listen(puerto, () => {    
-    console.log(`servidor escuchando en http://localhost:${puerto}`);
+const server = http.listen(puerto, () => {
+    console.log(`servidor socket escuchando en http://localhost:${puerto}`);
 });
 
 // en caso de error, avisar
 server.on('error', error => {
-    console.log('error en el servidor:', error);
+    console.log('error socket en el servidor:', error);
 });
