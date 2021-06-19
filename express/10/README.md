@@ -1,4 +1,4 @@
-Example App Express with type module
+Example App Express with commonjs
 =====================================
 - [x] modules
 - [x] fs 
