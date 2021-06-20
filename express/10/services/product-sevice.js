@@ -3,15 +3,21 @@ const Producto = require("../model/producto.js");
 
 class MemoryDB {
     
+    //caso ejemplo una DB memory
     constructor(){
+
         this.items = [];
+
     }
 
     getIndex(id){
+        
         const index = this.items.findIndex((item)=>item.id === id);
+        
         if (index>=0){
             return index;
         }
+
         return -1;
     }
 
@@ -126,7 +132,7 @@ class ProductService {
             }
             return null;   
         } catch (error) {
-            return res.json({error:error});
+            throw Error(error)
         }
     }
 
@@ -150,7 +156,7 @@ class ProductService {
             }
             return null;
         } catch (error) {
-            return res.json({error:error}); 
+            throw Error(error)
         }
     }
 
@@ -167,7 +173,7 @@ class ProductService {
             
             return null;
         } catch (error) {
-            return res.json({error:error}); 
+            throw Error(error)
         }
     }
 

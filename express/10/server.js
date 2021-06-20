@@ -5,7 +5,7 @@
 //Migro app hacia commonjs en lugar de modules porque socket io como modules type no me funciono bien.
 const express = require('express');
  
-const routerProductos = require('./routes/productos');
+const routerProductos = require('./api/productos');
 
 const handlebars = require('express-handlebars');
 

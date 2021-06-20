@@ -6,6 +6,7 @@ Example App Express with commonjs
 - [x] CRUD.
 - [x] Handlebars
 - [x] socket.io
+- [x] chat + store
 
 # Sample view
 
