@@ -1,11 +1,3 @@
 Proyectos con NodeJS
 =======================
-
-# Etapas
-
-- [x] estructura
-- [x] modelo
-- [x] logica simple
-- [x] render vista
-- [x] API simple
-- [x] socket simple
+Lista de ejemplos para implementación de API por medio de Express y otras herramientas.
