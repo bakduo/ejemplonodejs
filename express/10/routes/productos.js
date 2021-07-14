@@ -1,61 +1,35 @@
-/*
 const express = require('express');
 
-const {getItems,getItem,postItem, updateItem, deleteItem} = require('../api/productos.js');
+const ProductoController = require('../api/productos');
 
-const CustomOrigin = require('../util/middleware');
+const routerProduct = express.Router();
 
-const functionOrigin = new CustomOrigin();
+const config = require('../config/index');
 
-const routerItems = express.Router();
+const repo = new ProductoRepository(config.dbproducts);
 
-routerItems.get('/addproducto',(req, res) => {
-    
-    try {
-        return res.render("add_producto");
-    } catch (error) {
-        return res.status(500).json({error:error});
-    }
-});
+const controller = new ProductoController(repo);
 
-//Rutas por default muestro los productos
-routerItems.get("/",functionOrigin.checkOrigin,getItems);
-//routerItems.get("/productos/vista",functionOrigin.checkOrigin,getItems);
 
-// else{
-//     return res.status(400).json({error:'No hay productos cargados'});
-// }
+/** ****Control router************ */
+routerProduct.get('/vista', controller.getVista);
 
-// }else{
-//     return res.status(200).json(items);
-// }
+routerProduct.get('/listar', controller.getProductos);
 
-routerItems.get("/productos/vista",(req,res)=>{
-    
-    
-    const items = getItems(req,res);
+routerProduct.get('/listar/:id', control.checkIdGet, controller.getProducto);
 
-    if (items==null){
-        
-        return res.render("productos",{
-                                    productos:null,
-                                    state:false
-                                });
-    }
 
-    return res.render("productos",{
-                            productos:items,
-                            state:true
-                        });
+routerProduct.post(
+  '/guardar',controller.postProducto
+);
 
-})
+routerProduct.put(
+  '/actualizar/:id',  controller.putProducto
+);
 
-//Apis crud de antes
-routerItems.get('/listar',functionOrigin.checkOrigin, getItems);
-routerItems.get('/listar/:id', getItem);
-routerItems.post('/guardar',functionOrigin.checkOrigin,postItem)
-routerItems.put('/actualizar/:id',updateItem)
-routerItems.delete('/borrar/:id',deleteItem)
+routerProduct.delete(
+  '/borrar/:id',controller.deleteProducto
+);
+/** ******************************* */
 
-module.exports = routerItems;
-*/
+module.exports = routerProduct;
