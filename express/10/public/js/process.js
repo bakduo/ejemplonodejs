@@ -57,10 +57,10 @@
                 }
                 sc.sendMsg("appendmsg",msg);
             }else{
-                alert("La longitud del mensaje es muy grande.")
+                alert("Very long message...")
             }
         }else{
-            alert("Email no valido");
+            alert("Email not valid");
         }
     }
 
@@ -90,7 +90,7 @@
             sc.sendMsg('procesar',producto);
             
         }else{
-            alert("Datos invalidos");
+            alert("Invalid DATA");
         }
 
         //clean formulario

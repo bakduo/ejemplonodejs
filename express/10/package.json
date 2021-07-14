@@ -1,12 +1,12 @@
 {
-  "name": "appexpress-12",
+  "name": "msg-chat-db",
   "version": "1.0.0",
   "description": "",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "rm -f db/*.json;cross-env NODE_ENV='development' node_modules/.bin/nodemon --inspect src/server.js"
   },
   "author": "Rodolfo",
   "license": "ISC",

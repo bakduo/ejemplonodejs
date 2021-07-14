@@ -1,15 +1,7 @@
 
-const ProductService = require('../services/product-sevice.js');
+const Producto = require('../model/producto');
 
-const ArchivoRepository = require("./archivo-repository.js")
-
-const service = new ProductService();
-
-const PATH_DB=process.env.PATH_DB || "/db/storage.db";
-
-const archivo = new ArchivoRepository(PATH_DB);
-
-const vector = [];
+const Mensaje = require('../model/mensaje');
 
 const TOTAL = 100;
 
@@ -51,48 +43,57 @@ class WSocket {
         return null;
     }
 
-    addOperation(canal){
+    async addOperation(canal){
 
-        canal.on("procesar",data=>{
+        canal.on("procesar",async (data)=>{
             const producto = {
                 title: data.title,
                 price: data.price,
                 thumbail: data.thumbail
             }
 
-            service.addProducto(producto);
-            const items = service.getProductos();
+            const p = new Producto(producto);
+
+            await p.save();
+
+            const items = await Producto.find();
             //client
             canal.emit("renderproductos",items);
             //all broadcast
             canal.broadcast.emit("renderproductos",items);
         });
 
-        canal.on("getproductos",data=>{
+        canal.on("getproductos",async (data)=>{
             //client
-            const items = service.getProductos();
+            const items = await Producto.find();
+
             canal.emit("renderproductos",items);
         });
 
-        canal.on("getmsg",async data=>{
+        canal.on("getmsg",async (data)=>{
             //client
-            const items = await archivo.readFile();
+            const items = await Mensaje.find();
             canal.emit("rendermsg",items);
         });
 
-        canal.on("appendmsg",async data =>{
+        canal.on("appendmsg",async (data) =>{
+
+            let  feedback = {};
 
             if (contador < TOTAL){
                 
-                const feeback = {
+                feedback = {
                     msg:data.msg,
                     tiempo:data.tiempo,
                     user:data.user
                 }
 
-                vector.push(feeback);
-                await archivo.save(vector);
-                canal.broadcast.emit("reloadmsg",feeback);
+                const m = new Mensaje(feedback);
+                
+                await m.save();
+
+                canal.broadcast.emit("reloadmsg",feedback);
+
                 contador++
             }else{
                 canal.emit("overflow",{});

@@ -9,7 +9,7 @@ const sc = (()=>{
 
             console.log("cargar productos");
             const template = `<center>
-            <h1>Listado de productos</h1>
+            <h1>List products</h1>
         </center>
 
         {{#if state }}
@@ -56,7 +56,7 @@ const sc = (()=>{
             <tbody>
             </tbody>
         </table>
-        <h1><center>No se encontrarón productos</center></h1>
+        <h1><center>No Products</center></h1>
         {{/if}}`
 
             let renderProductos = Handlebars.compile(template);
@@ -76,7 +76,7 @@ const sc = (()=>{
 
     socket.on("connection",(data)=>{
         
-        console.log("Conexion cliente");
+        console.log("Conection client");
 
     })
 
@@ -87,7 +87,7 @@ const sc = (()=>{
     });
 
     socket.on("overflow",(data)=>{
-        alert("Maximo msg permitidos")
+        alert("MAx msg ...")
     });
 
     socket.on("rendermsg",items=>{
