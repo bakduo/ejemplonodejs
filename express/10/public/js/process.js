@@ -66,14 +66,14 @@
 
     function procesar(){
         
-        const title =  datos.elements.namedItem("title").value || null  ; 
+        const name =  datos.elements.namedItem("name").value || null  ; 
         const precio = datos.elements.namedItem("price").value || null; 
         const thumbail = datos.elements.namedItem("thumbail").value || null;
 
         let valid = false;
 
-        if (title && precio && thumbail){
-            const ok1 = (typeof title === 'string');
+        if (name && precio && thumbail){
+            const ok1 = (typeof name === 'string');
             const ok2 = (typeof thumbail === 'string')
             const ok3 = isNaN(precio)
             valid = ((ok1 && ok2) && !ok3)
@@ -82,7 +82,7 @@
         if (valid){
 
             const producto = {
-                title:title,
+                name:name,
                 price: precio,
                 thumbail: thumbail,
             }

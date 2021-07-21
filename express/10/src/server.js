@@ -28,10 +28,10 @@ app.engine("hbs",
     }) 
 );
 
-//app.use('/',routerProductos);//Ahora usa public para poder tener socketio client-side
+app.use('/productos',routerProductos);//productos/vista productos/vista-test
 app.use('/api/productos',routerProductos);
 app.set("view engine","hbs");
-app.set("views","./views");
+app.set("views",__dirname + "/views");
 
 //wrapper TODO fix si crece
 const customsocket = new WSocket(io);

@@ -5,6 +5,7 @@ Example App Express with commonjs
 - [x] Handlebars
 - [x] socket.io
 - [x] chat + store
+- [x] faker data
 - [x] MongoDB persistence
 
 # Sample view

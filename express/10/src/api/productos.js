@@ -1,15 +1,58 @@
 const Producto = require('../model/producto');
 
+const faker = require('faker');
+
+/*
+nombre, precio y foto.
+*/
+faker.locale = 'es';
+
+class RandomProducto {
+    constructor(){
+                
+    }
+
+    static get(){
+        const producto = {
+            name:faker.commerce.productName(),
+            price:faker.commerce.price(1,1000),
+            thumbail:faker.image.business()
+        }
+
+        return producto;
+    }
+
+    static getCollection(cant=0){
+
+        const contenido = [];
+
+        for(let i = 0 ;i < cant ; i++){
+            contenido.push(RandomProducto.get());
+        }
+        return contenido;
+    }
+
+
+
+}
+
+
 class ProductoController {
   constructor() {    
   }
 
-  getVista = async (req,res,next)=>{
 
-    const items = await Producto.find();
 
-    console.log(items);
-    
+  getVistaFake = async (req,res,next)=>{
+
+    let cant = 10;
+
+    if (Object.keys(req.query).length>0 && req.query.cant){
+        cant = req.query.cant;
+    }
+
+    const items = RandomProducto.getCollection(cant);
+
     if (items==null){
     
         return res.render("productos",{
@@ -22,6 +65,12 @@ class ProductoController {
                             productos:items,
                             state:true
                         });
+
+}
+
+  getVista = async (req,res,next)=>{
+
+    return res.render("productos-dinamic");
 
 }
 
@@ -75,7 +124,7 @@ class ProductoController {
       if (req.params.id) {
         const producto = await Producto.updateOne(
           { _id: req.params.id },
-          { $set: { title: req.body.title,thumbail:req.body.thumbail,price:req.body.price }}
+          { $set: { name: req.body.name,thumbail:req.body.thumbail,price:req.body.price }}
         );
         return res.status(200).json(req.body);
       }

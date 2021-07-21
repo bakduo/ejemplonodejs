@@ -11,7 +11,8 @@ const CustomControl = require("../middleware/custom-control");
 const control = new CustomControl();
 
 
-/** ****Control router************ */
+/******Control router*************/
+routerProduct.get('/vista-test', controller.getVistaFake);
 routerProduct.get('/vista', controller.getVista);
 routerProduct.get('/listar', controller.getAll);
 routerProduct.get('/listar/:id',controller.get);

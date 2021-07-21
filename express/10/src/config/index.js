@@ -6,9 +6,9 @@ const path = require('path');
 // db.createCollection("productos", 
 //     { validator: { 
 //         $jsonSchema: { 
-//             bsonType: "object", required: ["title", "price","thumbail"],
+//             bsonType: "object", required: ["name", "price","thumbail"],
 //             properties: { 
-//                 title: { bsonType: "string", description: "must be a string and is required" },
+//                 name: { bsonType: "string", description: "must be a string and is required" },
 //                 thumbail: { bsonType: "string", description: "must be a string and is required" },  
 //                 price: { bsonType: "number", description: "must be a number" }, 
 //             },

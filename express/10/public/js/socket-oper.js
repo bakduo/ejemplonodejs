@@ -29,7 +29,7 @@ const sc = (()=>{
                 {{#if productos}}
                     {{#each productos}}
                         <tr>
-                        <td>{{this.title}}</td>
+                        <td>{{this.name}}</td>
                         <td>{{this.price}}</td>
                         <td>
                             <img alt="image" src="{{this.thumbail}}"

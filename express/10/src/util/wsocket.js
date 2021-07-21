@@ -47,7 +47,7 @@ class WSocket {
 
         canal.on("procesar",async (data)=>{
             const producto = {
-                title: data.title,
+                name: data.name,
                 price: data.price,
                 thumbail: data.thumbail
             }
