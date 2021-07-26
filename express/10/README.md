@@ -7,6 +7,7 @@ Example App Express with commonjs
 - [x] chat + store
 - [x] faker data
 - [x] MongoDB persistence
+- [x] Normalizr
 
 # Sample view
 

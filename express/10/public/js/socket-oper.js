@@ -1,6 +1,13 @@
 //Patron modulo
 const sc = (()=>{
 
+        function getData(data){
+
+            const out = JSON.stringify(data, null, 2);
+        
+            return out;
+        }
+
         const socket = io();
 
         const textarea = document.getElementById("chatarea");
@@ -82,7 +89,14 @@ const sc = (()=>{
 
     socket.on("reloadmsg",(data)=>{
 
-        const chat = "<b>"+ data.user +  "</b>: " + "<i>" + data.msg + "</i> " + "[" + data.tiempo + "]" ;
+        const datMessage = getData(data.normalizer);
+
+        console.log(datMessage);
+
+        const obj = JSON.parse(datMessage);
+
+        const chat = "<b>"+ obj.entities.mensaje.mensaje.author.email +  "</b>: " + "<i>" + obj.entities.mensaje.mensaje.comment + "</i> " + "[" + data.tiempo + "]" ;
+
         textarea.innerHTML = textarea.innerHTML + "<br>" + chat;
     });
 
@@ -93,7 +107,8 @@ const sc = (()=>{
     socket.on("rendermsg",items=>{
 
         items.forEach(element => {
-            const chat = "<b>"+ element.user +  "</b>: " + "<i>" + element.msg + "</i> " + "[" + element.tiempo + "]" ;
+            console.log(element);
+            const chat = "<b>"+ element.author.email +  "</b>: " + "<i>" + element.comment + "</i> " + "[" + element.tiempo + "]" ;
             textarea.innerHTML = textarea.innerHTML + "<br>" + chat;
         });
 

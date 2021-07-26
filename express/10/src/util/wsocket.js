@@ -7,6 +7,39 @@ const TOTAL = 100;
 
 let contador = 0;
 
+const normalizr = require("normalizr");
+
+const schema = normalizr.schema;
+
+const normalize = normalizr.normalize;
+
+var originalData = {
+    id:'mensaje',    
+        author: {
+            email: 'mail del usuario' ,
+            nombre: 'nombre del usuario' ,
+            apellido: 'apellido del usuario' ,
+            edad: 'edad del usuario' ,
+            alias: 'alias del usuario' ,
+            avatar: 'url avatar (foto, logo) del usuario'
+        },
+        comment: 'mensaje del usuario',
+    }
+
+const comment = new schema.Entity('comment',{});
+const author = new schema.Entity('author',{comment},{idAttribute: 'email'});
+const mensaje = new schema.Entity('mensaje',{
+    assignee:author,
+    comment
+});
+
+function getData(data){
+
+    const out = JSON.stringify(data, null, 2);
+
+    return out;
+}
+
 class WSocket {
     
     cs = null;
@@ -46,6 +79,8 @@ class WSocket {
     async addOperation(canal){
 
         canal.on("procesar",async (data)=>{
+
+
             const producto = {
                 name: data.name,
                 price: data.price,
@@ -82,16 +117,29 @@ class WSocket {
 
             if (contador < TOTAL){
                 
+                const dataNorma = getData(data.normalizer);
+
                 feedback = {
-                    msg:data.msg,
                     tiempo:data.tiempo,
-                    user:data.user
+                    normalizer: dataNorma
                 }
 
-                const m = new Mensaje(feedback);
-                
-                await m.save();
+                // feedback = {
+                //     msg:data.msg,
+                //     tiempo:data.tiempo,
+                //     user:data.user
+                // }
 
+                const obj = JSON.parse(dataNorma);
+                const mensajeCustom = {}
+                mensajeCustom.author = obj.entities.mensaje.mensaje.author,
+                mensajeCustom.tiempo = data.tiempo;
+                mensajeCustom.comment = obj.entities.mensaje.mensaje.comment;
+
+                console.log(mensajeCustom);
+
+                const m = new Mensaje(mensajeCustom);
+                await m.save();
                 canal.broadcast.emit("reloadmsg",feedback);
 
                 contador++

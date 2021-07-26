@@ -11,6 +11,14 @@
     const textarea2 = document.getElementById("msgtext1");
     const email = document.getElementById("usermail");
     const boton2 = document.getElementById("boton2");
+    /**Append data**/
+    const nombre = document.getElementById("nombre");
+    const apellido = document.getElementById("apellido");
+    const alias = document.getElementById("alias");
+    const avatar = document.getElementById("avatar");
+    const edad = document.getElementById("edad");
+    const updatedata = document.getElementById("sizenorma");
+
     
     boton.addEventListener('click',procesar);
     boton2.addEventListener("click",appendMessage);
@@ -40,20 +48,70 @@
    }
    
     function appendMessage(){
-        
+
         const texto = textarea2.value;
         const tiempo = new Date();
         const parser =  tiempo.getDay() +  "/" + tiempo.getMonth() + "/" + tiempo.getFullYear() + " " + tiempo.getHours() + ":" + tiempo.getMinutes() + ":" + tiempo.getSeconds();
         const securemsg = escapeHTML(texto);
 
+        /**Datos Normilizer*/
+        const comment = new normalizr.schema.Entity('comment',{});
+        const author = new normalizr.schema.Entity('author',{comment},{idAttribute: 'email'});
+        const mensajeNorma = new normalizr.schema.Entity('mensaje',{
+            assignee:author,
+            comment
+        });
+
+
         if (validateEmail(email.value)){
             if (securemsg.length < MSG_SIZE){
                 const chat = "<b>"+ email.value +  "</b>: " + "<i>" + securemsg + "</i> " + "[" + parser + "]" ;
                 textarea.innerHTML = textarea.innerHTML + "<br>" + chat;
+                /*
+                {
+                mensaje: {
+                    id: 'mensaje',
+                    author: {
+                    email: 'mail del usuario',
+                    nombre: 'nombre del usuario',
+                    apellido: 'apellido del usuario',
+                    edad: 'edad del usuario',
+                    alias: 'alias del usuario',
+                    avatar: 'url avatar (foto, logo) del usuario'
+                    },
+                    comment: 'mensaje del usuario'
+                }
+                }
+                */
+
+                const originalData = {
+                    id:'mensaje',
+                        author: {
+                                email: email.value,
+                                nombre: nombre.value ,
+                                apellido: apellido.value ,
+                                edad: edad.value ,
+                                alias: alias.value ,
+                                avatar: avatar.value
+                        },
+                        comment: securemsg
+                }
+        
+                const normalizedMessageData = normalizr.normalize(originalData, mensajeNorma);
+                const denormalize = normalizr.denormalize(normalizedMessageData.result,originalData,normalizedMessageData.entities)
+                const totalNorma = JSON.stringify(normalizedMessageData).length;
+                const totalOrig = JSON.stringify(originalData).length;
+                const totalDeno = JSON.stringify(denormalize).length;
+                console.log(`Size normalize orig: ${totalOrig} norma: ${totalNorma} deno: ${totalDeno}`);
+                const primerdif = (totalNorma-totalOrig) / 100.0;
+                const calculate = (Math.floor(totalNorma*primerdif) - 100);
+                updatedata.innerHTML = `Size normalize orig: ${totalOrig} norma: ${totalNorma} deno: ${totalDeno} overhead: ${calculate}%`;
+
+                
+                
                 const msg = {
-                    msg:securemsg,
+                    normalizer: normalizedMessageData,
                     tiempo:parser,
-                    user:email.value
                 }
                 sc.sendMsg("appendmsg",msg);
             }else{
