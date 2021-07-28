@@ -1,6 +1,7 @@
 const Producto = require('../model/producto');
 
 const faker = require('faker');
+const session = require('express-session');
 
 /*
 nombre, precio y foto.
@@ -70,7 +71,7 @@ class ProductoController {
 
   getVista = async (req,res,next)=>{
 
-    return res.render("productos-dinamic");
+    return res.render("productos-dinamic",{user:req.session.user});
 
 }
 

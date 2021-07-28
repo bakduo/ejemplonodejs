@@ -18,6 +18,22 @@
   <div>
 
 
+    <nav class="navbar navbar-dark bg-dark justify-content-between">
+      <a class="navbar-brand">FakeCommerce</a>
+      
+      <form id="formLogin" class="form-inline">
+
+        {{#if user}}
+
+        {{else}}
+
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="login()">Login</button>
+
+        {{/if}}
+
+      </form>
+    </nav>
+
     <div class="container mt-3">
 
       <div class="container">
@@ -42,10 +58,47 @@
     <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js" crossorigin="anonymous"></script>
 
     <script src="/js/handlebars-v4.7.6.js" crossorigin="anonymous"></script>
-    <script src="/js/socket-oper.js" crossorigin="anonymous"></script>
-    <script src="/js/process.js" crossorigin="anonymous"></script>
+    
+  
+  <script>
 
+    function login(){
+        location.href="http://localhost:3000/login";
+    }
 
+    function logout(){
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }        
+
+        const url = "http://localhost:3000/logout"
+
+        const peticion = async () =>{
+
+            const response = await fetch(url,options);
+            
+            if (response){
+
+                    const user  = await response.json();
+
+                    if (!user.status){
+                        alert(user.info);
+                    }else{
+                        location.href=user.info;
+                    }
+            }else{
+                 alert("No es posible enviar peticion");
+            }
+        }
+
+        peticion();
+    }
+
+  </script>
    
   </body>
 </html>

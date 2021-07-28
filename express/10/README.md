@@ -8,6 +8,7 @@ Example App Express with commonjs
 - [x] faker data
 - [x] MongoDB persistence
 - [x] Normalizr
+- [x] session very minimal
 
 # Sample view
 
