@@ -13,8 +13,8 @@ const schema = normalizr.schema;
 
 const normalize = normalizr.normalize;
 
-var originalData = {
-    id:'mensaje',    
+const originalData = {
+        id: 'mensaje',
         author: {
             email: 'mail del usuario' ,
             nombre: 'nombre del usuario' ,
@@ -26,12 +26,59 @@ var originalData = {
         comment: 'mensaje del usuario',
     }
 
+const MessageData = {
+        id:'mensaje',
+        mensajes:[
+            {
+            author: {
+                email: 'mail del usuario' ,
+                nombre: 'nombre del usuario' ,
+                apellido: 'apellido del usuario' ,
+                edad: 'edad del usuario' ,
+                alias: 'alias del usuario' ,
+                avatar: 'url avatar (foto, logo) del usuario'
+            },
+            comment: 'mensaje del usuario',
+            tiempo: 'tiempo'
+            },
+            {
+                author: {
+                    email: 'mail del usuario' ,
+                    nombre: 'nombre del usuario' ,
+                    apellido: 'apellido del usuario' ,
+                    edad: 'edad del usuario' ,
+                    alias: 'alias del usuario' ,
+                    avatar: 'url avatar (foto, logo) del usuario'
+                },
+                comment: 'mensaje del usuario',
+                tiempo: 'tiempo'
+            },
+            {
+            author: {
+                email: 'mail del usuario' ,
+                nombre: 'nombre del usuario' ,
+                apellido: 'apellido del usuario' ,
+                edad: 'edad del usuario' ,
+                alias: 'alias del usuario' ,
+                avatar: 'url avatar (foto, logo) del usuario'
+            },
+            comment: 'mensaje del usuario',
+            tiempo: 'tiempo'
+            },
+        ]
+}
+
 const comment = new schema.Entity('comment',{});
 const author = new schema.Entity('author',{comment},{idAttribute: 'email'});
 const mensaje = new schema.Entity('mensaje',{
     assignee:author,
     comment
 });
+
+const posts = new schema.Entity('posts',{
+    assignee:[mensaje],
+});
+
 
 function getData(data){
 
@@ -108,7 +155,32 @@ class WSocket {
         canal.on("getmsg",async (data)=>{
             //client
             const items = await Mensaje.find();
-            canal.emit("rendermsg",items);
+
+            //Normalizr
+
+            const transform = items.map((item)=>{
+                return {author:{
+                        nombre: item.author.nombre,
+                        apellido: item.author.apellido,
+                        email: item.author.email,
+                        alias: item.author.alias,
+                        avatar: item.author.avatar,
+                        edad: item.author.edad
+                      },
+                      comment:item.comment,
+                      tiempo:item.tiempo,
+                }});
+
+            const MessageDataOrig = {
+                id:'mensaje',
+                mensajes: transform
+            }
+
+            const normalizedMessageDataOrig = normalize(MessageDataOrig, posts);
+
+            const outNorma = JSON.stringify(normalizedMessageDataOrig, null, 3);
+
+            canal.emit("rendermsg",outNorma);
         });
 
         canal.on("appendmsg",async (data) =>{
@@ -124,11 +196,6 @@ class WSocket {
                     normalizer: dataNorma
                 }
 
-                // feedback = {
-                //     msg:data.msg,
-                //     tiempo:data.tiempo,
-                //     user:data.user
-                // }
 
                 const obj = JSON.parse(dataNorma);
                 const mensajeCustom = {}

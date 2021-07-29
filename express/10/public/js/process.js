@@ -98,7 +98,7 @@
                 }
         
                 const normalizedMessageData = normalizr.normalize(originalData, mensajeNorma);
-                const denormalize = normalizr.denormalize(normalizedMessageData.result,originalData,normalizedMessageData.entities)
+                const denormalize = normalizr.denormalize(normalizedMessageData.result,originalData,normalizedMessageData.entities);
                 const totalNorma = JSON.stringify(normalizedMessageData).length;
                 const totalOrig = JSON.stringify(originalData).length;
                 const totalDeno = JSON.stringify(denormalize).length;

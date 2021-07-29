@@ -1,11 +1,42 @@
 //Patron modulo
 const sc = (()=>{
 
+        
+
+        function getDataOneMessage(data){
+
+            const comment = new normalizr.schema.Entity('comment',{});
+            const author = new normalizr.schema.Entity('author',{comment},{idAttribute: 'email'});
+            const mensaje = new normalizr.schema.Entity('mensaje',{
+                assignee:author,
+                comment
+            });
+
+            data = JSON.parse(data);
+            
+            const desnormalizado = new normalizr.denormalize(data.result, mensaje, data.entities);
+
+            return JSON.stringify(desnormalizado, null, 2);
+        }
+
         function getData(data){
 
-            const out = JSON.stringify(data, null, 2);
-        
-            return out;
+            const comment = new normalizr.schema.Entity('comment',{});
+            const author = new normalizr.schema.Entity('author',{comment},{idAttribute: 'email'});
+            const mensaje = new normalizr.schema.Entity('mensaje',{
+                assignee:author,
+                comment
+            });
+
+            const posts = new normalizr.schema.Entity('posts',{
+                assignee:[mensaje]
+            });
+
+            data = JSON.parse(data);
+            
+            const desnormalizado = new normalizr.denormalize(data.result, posts, data.entities);
+
+            return JSON.stringify(desnormalizado, null, 3);
         }
 
         const socket = io();
@@ -89,7 +120,7 @@ const sc = (()=>{
 
     socket.on("reloadmsg",(data)=>{
 
-        const datMessage = getData(data.normalizer);
+        const datMessage = JSON.parse(getDataOneMessage(data));
 
         console.log(datMessage);
 
@@ -104,9 +135,13 @@ const sc = (()=>{
         alert("MAx msg ...")
     });
 
-    socket.on("rendermsg",items=>{
+    socket.on("rendermsg",(items)=>{
 
-        items.forEach(element => {
+        const datMessageNorma = JSON.parse(getData(items));
+
+        console.log(datMessageNorma.mensajes);
+
+        datMessageNorma.mensajes.forEach(element => {
             console.log(element);
             const chat = "<b>"+ element.author.email +  "</b>: " + "<i>" + element.comment + "</i> " + "[" + element.tiempo + "]" ;
             textarea.innerHTML = textarea.innerHTML + "<br>" + chat;
