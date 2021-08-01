@@ -1,4 +1,4 @@
-const WMongo = require('../util/wmongo');
+const WMongo = require('./storage/wmongo');
 
 class DBCustom {
   constructor(config) {
@@ -9,7 +9,7 @@ class DBCustom {
   getStore() {
     switch (this.type.dbtype) {
       case 'mongo':
-        this.store = new WMongo();
+        this.store = new WMongo(this.type.url,this.type.dbname,this.type.secure,`${process.env.SCHEMA_NOSQL}`);
         break;
 
       default:
