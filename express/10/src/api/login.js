@@ -1,8 +1,3 @@
-const user = {
-    username:'sample',
-    password:'sample'
-}
-
 class LoginController {
     
     
@@ -10,7 +5,7 @@ class LoginController {
         this.repo = repo;
     }
 
-    vistalogout = async(req,res,next) =>{
+    vistalogout = async (req,res,next) =>{
 
         if (req.query.username){
 
@@ -20,59 +15,48 @@ class LoginController {
         return res.redirect('http://localhost:3000/login');
     }
 
-    logout = async(req,res,next) =>{
+    failLogin = async (req,res,next)=>{
+        return res.render("faillogin");
+    }
 
-        if (req.session.user){ 
-            req.session.destroy();
-            //NO FUNCIONA
-            // req.session.destroy((err)=>{
-            //     if (!err){
-            //         console.log("Ok logout");
-            //         return res.redirect('http://localhost:3000/logout?username='+user.username);
-            //     }else{
-            //         console.log(`Error: ${err}`);
-            //     }
-            // })
-            res.clearCookie('user');
-            return res.status(200).json({status:true,info:'http://localhost:3000/logout?username='+user.username});
-            
+    failSignup = async (req,res,next)=>{
+        return res.render("failsignup");
+    }
+
+    vistasignup = async (req,res,next)=>{
+        return res.render("signup");
+    }
+
+    signup = async (req,res,next)=>{
+        console.log(req.user);
+        if (req.user){
+            req.session.user = req.user;
+            return res.redirect("http://localhost:3000/productos/vista");
         }
-        return res.status('500').json({status:false,info:'sin user'})
+    }
+
+    logout = async(req,res,next) =>{
+        const username = req.user.username;
+        req.logout();
+        res.clearCookie('user');
+        req.session.destroy();
+        return res.redirect("http://localhost:3000/logout?username="+username);
     }
 
     login = async (req,res,next) =>{
 
-        console.log(req.body);
+        console.log(req.user);
 
-        if (req.body.username && req.body.password){
-
-            //const user = await this.repo.find(username);
-
-            if (user){
-                if (user.username === req.body.username && req.body.password === user.password ){
-                    req.session.user = user;
-                    //NO FUNCIONA
-                    // req.session.save(function(err){
-                    //     if (!err){
-                    //         console.log(req.session);
-                    //          //res.setHeader('Content-Type', 'application/json');
-                    //         res.redirect('http://localhost:3000/productos/vista');
-                    //         //return res.status(200).json({status:true,info:'http://localhost:3000/productos/vista'});
-                    //     }else{
-                    //         console.error(err);
-                    //     }
-                    // });
-                    //return res.redirect('http://localhost:3000/productos/vista');
-                    res.cookie('user' ,user.username, {expire : 1000 * 60});
-                    return res.status(200).json({status:true,info:'http://localhost:3000/productos/vista'});
-                    
-                }
-            }            
+        if (req.user){
+            req.session.user = req.user;
+            res.cookie('user' ,req.session.user.username, {expire : 1000 * 60});
+            return res.redirect("http://localhost:3000/productos/vista");
+            
         }
-        return res.status('401').json({status:false,info:'Credenciales incorrectaas'});
+        return res.redirect('http://localhost:3000/faillogin');
     }
 
-    vista = async (req,res,next) =>{
+    vistaLogin = async (req,res,next) =>{
         return res.render('login');
     }
 }

@@ -27,7 +27,9 @@
 
         {{else}}
 
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="signup()">Signup</button>
         <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="login()">Login</button>
+
 
         {{/if}}
 
@@ -66,10 +68,17 @@
         location.href="http://localhost:3000/login";
     }
 
+    function signup(){
+        location.href="http://localhost:3000/signup";
+    }
+
+    
+
     function logout(){
 
         const options = {
             method: 'POST',
+            redirect: 'follow',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -80,16 +89,11 @@
         const peticion = async () =>{
 
             const response = await fetch(url,options);
-            
-            if (response){
+          
+            if (response.ok){
 
-                    const user  = await response.json();
+                location.href=response.url;
 
-                    if (!user.status){
-                        alert(user.info);
-                    }else{
-                        location.href=user.info;
-                    }
             }else{
                  alert("No es posible enviar peticion");
             }

@@ -9,6 +9,10 @@ class GenericDAO {
     loadConfiguration(obj) {
       this.items.loadConfiguration(obj.getName());
     }
+
+    getModel(){
+      return this.items.getModel();
+    }
   
     init() {
       this.items = this.data.getStore();

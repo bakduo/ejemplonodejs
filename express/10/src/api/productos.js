@@ -31,17 +31,12 @@ class RandomProducto {
         }
         return contenido;
     }
-
-
-
 }
 
 
 class ProductoController {
   constructor() {    
   }
-
-
 
   getVistaFake = async (req,res,next)=>{
 
@@ -150,7 +145,6 @@ class ProductoController {
             } else {
                 return res.status(400).json({ error: "Producto not remove" });
             }
-            
         }
       }
       return res.status(400).json({ error: "Product not exist." });

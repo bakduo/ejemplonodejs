@@ -9,6 +9,7 @@ Example App Express with commonjs
 - [x] MongoDB persistence
 - [x] Normalizr
 - [x] session support mongo,redis,sessiofile
+- [x] add support passport login
 
 # Sample view
 
