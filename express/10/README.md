@@ -10,6 +10,7 @@ Example App Express with commonjs
 - [x] Normalizr
 - [x] session support mongo,redis,sessiofile
 - [x] add support passport login
+- [x] add support login facebook
 
 # Sample view
 

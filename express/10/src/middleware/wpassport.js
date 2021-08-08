@@ -84,6 +84,7 @@ class WPassport {
 
                 case "facebook":
 
+                    //Remember use secret for this
                     passport.use('facebook',new FacebookStrategy({
                         clientID: process.env.FACEBOOK_CLIENTID,
                         clientSecret: process.env.FACEBOOK_CLIENTS,
