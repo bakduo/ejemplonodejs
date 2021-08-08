@@ -28,7 +28,6 @@ class LoginController {
     }
 
     signup = async (req,res,next)=>{
-        console.log(req.user);
         if (req.user){
             req.session.user = req.user;
             return res.redirect("http://localhost:3000/productos/vista");
@@ -36,8 +35,14 @@ class LoginController {
     }
 
     logout = async(req,res,next) =>{
-        const username = req.user.username;
-        req.logout();
+
+        let username = "";
+        if (req.isAuthenticated()){
+            if (req.user.username){
+                username = req.user.username
+            }
+            req.logout();
+        }
         res.clearCookie('user');
         req.session.destroy();
         return res.redirect("http://localhost:3000/logout?username="+username);
@@ -45,10 +50,8 @@ class LoginController {
 
     login = async (req,res,next) =>{
 
-        console.log(req.user);
-
         if (req.user){
-            req.session.user = req.user;
+            //req.session.user = req.user;
             res.cookie('user' ,req.session.user.username, {expire : 1000 * 60});
             return res.redirect("http://localhost:3000/productos/vista");
             

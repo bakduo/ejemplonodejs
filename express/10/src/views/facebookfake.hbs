@@ -1,0 +1,36 @@
+<!-- As a heading -->
+    {{#if user}}
+    <nav class="navbar navbar-light bg-light">
+      <span class="navbar-brand mb-0 h1">Bienvenido {{user.displayName}}</span>
+      <form id="formLogin" class="form-inline">
+
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button"  onclick="logout()">Logout</button>
+
+      </form>
+    </nav>
+
+
+    <div class="container mt-3">
+
+      <div class="container">
+
+            {{user.email}} <br>
+            {{user.displayName}} <br>
+            {{user.profileUrl}} <br>
+            {{#if user.photos}} <br>
+                {{user.photos}} <br>
+            {{else}} 
+                Sin foto <br>
+            {{/if}}
+
+ 
+            
+            
+      </div>
+
+
+      <br>
+
+
+    </div>
+    {{/if}}

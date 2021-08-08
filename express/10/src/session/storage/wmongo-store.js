@@ -1,3 +1,5 @@
+'use strict'
+
 const SessionStoreGeneric = require('./session-store-generic');
 const MongoStore = require('connect-mongo');
 

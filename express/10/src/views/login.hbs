@@ -20,6 +20,8 @@
         
             <button class="btn btn-primary btn-lg btn-block" id="loginbutton" type="button">Login</button>
 
+            <button class="btn btn-primary btn-lg btn-block" id="loginbutton2" type="button">Facebook</button>
+
             <hr class="my-4">
             
           </div>
@@ -34,6 +36,12 @@
     const username = document.getElementById("username");
     const password = document.getElementById("password");
     const loginTest = document.getElementById("loginbutton");
+    const loginTestII = document.getElementById("loginbutton2");
+
+    loginTestII.onclick = function loginFacebook(){
+      
+        location.href="http://localhost:3000/auth/facebook"
+    }
 
     loginTest.onclick = function login() {
         const options = {

@@ -1,3 +1,5 @@
+'use strict'
+
 //Uso middleware a nivel de ruta porque me permite agregar funcionalidad  sin modificar mucho el codigo original
 
 class CustomControl {

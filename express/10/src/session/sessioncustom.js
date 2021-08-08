@@ -1,3 +1,5 @@
+'use strict'
+
 const WMongoStore = require("./storage/wmongo-store");
 
 class SessionCustom {

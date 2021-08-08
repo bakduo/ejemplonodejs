@@ -1,3 +1,5 @@
+'use strict'
+
 const config = require('../config/index');
 
 exports.cookieControl = async (req, res, next) => {

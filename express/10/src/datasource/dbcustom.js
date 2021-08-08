@@ -1,5 +1,8 @@
 const WMongo = require('./storage/wmongo');
 
+/**
+ * [DBCustom factory DB]
+ */
 class DBCustom {
   constructor(config) {
     this.store = null;

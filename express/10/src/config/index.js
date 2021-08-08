@@ -11,6 +11,8 @@ const SessionCustom = require('../session/sessioncustom');
 
 const oneMinute = 1000 * 60;
 
+const supportPassport=(process.env.SUPPORT_LOGIN).split(",")
+
 const config = {
     server: {
       port: process.env.PORT || 3000,
@@ -20,7 +22,8 @@ const config = {
     db: {},
     dbsession: {},
     session:{},
-    timesession:(oneMinute*10)
+    timesession:(oneMinute*10),
+    passportLogin: supportPassport
   };
 
 
