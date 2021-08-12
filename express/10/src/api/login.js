@@ -1,6 +1,9 @@
+const config = require('../config/index');
+
+const port = config.server.port;
+
 class LoginController {
-    
-    
+
     constructor(repo){
         this.repo = repo;
     }
@@ -12,7 +15,9 @@ class LoginController {
             return res.render('logout',{user:req.query.username});
         }
 
-        return res.redirect('http://localhost:3000/login');
+        const url = "http://localhost:"+port+"/login";
+
+        return res.redirect(url);
     }
 
     failLogin = async (req,res,next)=>{
@@ -30,7 +35,8 @@ class LoginController {
     signup = async (req,res,next)=>{
         if (req.user){
             req.session.user = req.user;
-            return res.redirect("http://localhost:3000/productos/vista");
+            const url = "http://localhost:"+port+"/productos/vista";
+            return res.redirect(url);
         }
     }
 
@@ -45,18 +51,18 @@ class LoginController {
         }
         res.clearCookie('user');
         req.session.destroy();
-        return res.redirect("http://localhost:3000/logout?username="+username);
+        const url = "http://localhost:"+port+"/logout?username="+username;
+        return res.redirect(url);
     }
 
     login = async (req,res,next) =>{
 
         if (req.user){
-            //req.session.user = req.user;
             res.cookie('user' ,req.session.user.username, {expire : 1000 * 60});
-            return res.redirect("http://localhost:3000/productos/vista");
-            
+            const url = "http://localhost:"+port+"3000/productos/vista";
+            return res.redirect(url);
         }
-        return res.redirect('http://localhost:3000/faillogin');
+        return res.redirect('http://localhost:'+port+'/faillogin');
     }
 
     vistaLogin = async (req,res,next) =>{

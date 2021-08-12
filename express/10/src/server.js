@@ -3,6 +3,7 @@ const express = require('express');
 const routerProductos = require('./routes/productos');
 const routerLogin = require('./routes/login');
 const routerSession = require('./routes/session');
+const routerProcess = require('./routes/wprocess');
 const handlebars = require('express-handlebars');
 const WSocket = require("./util/wsocket");
 const cookieParser = require('cookie-parser');
@@ -53,12 +54,10 @@ app.use(passport.session());
 app.use('/productos',routerProductos);//productos/vista productos/vista-test
 app.use('/api/productos',routerProductos);
 app.use('/',routerLogin);
+app.use('/',routerProcess);
 app.use('/session',routerSession);
 app.set("view engine","hbs");
 app.set("views",__dirname + "/views");
-
-
-
 
 //wrapper TODO fix si crece
 const customsocket = new WSocket(io);

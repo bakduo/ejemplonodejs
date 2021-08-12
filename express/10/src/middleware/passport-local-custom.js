@@ -25,12 +25,6 @@ class PassportLocalCustom {
     
         if (req.isAuthenticated()){
     
-            //const userTmp = req.user;
-    
-            //let userModel = this.repo.getModel();
-    
-            //req.session.user = await userModel.findOne({username: userTmp });
-            
             req.session.user = {username:req.user.username};
             
             next();

@@ -37,10 +37,13 @@
     const password = document.getElementById("password");
     const loginTest = document.getElementById("loginbutton");
     const loginTestII = document.getElementById("loginbutton2");
+    
 
     loginTestII.onclick = function loginFacebook(){
-      
-        location.href="http://localhost:3000/auth/facebook"
+        //location.href="http://localhost:3000/auth/facebook"
+        let url = location.protocol + '//' + location.host;
+        location.href=url+"/auth/facebook";
+
     }
 
     loginTest.onclick = function login() {
@@ -55,7 +58,10 @@
                 'Content-Type': 'application/json'
             }
         }
-        const url = "http://localhost:3000/login"
+
+        let url = location.protocol + '//' + location.host;
+
+        url = url + "/login"
 
         const peticion = async () =>{
 

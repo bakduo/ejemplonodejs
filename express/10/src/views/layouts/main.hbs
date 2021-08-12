@@ -63,18 +63,24 @@
   
   <script>
 
+    
+
     function login(){
-        location.href="http://localhost:3000/login";
+
+      let url = location.protocol + '//' + location.host;
+        location.href=url + "/login";
     }
 
     function signup(){
-        location.href="http://localhost:3000/signup";
+      let url = location.protocol + '//' + location.host;
+        location.href=url + "/signup";
     }
 
     
 
     function logout(){
 
+      let url = location.protocol + '//' + location.host;
         const options = {
             method: 'POST',
             redirect: 'follow',
@@ -83,7 +89,7 @@
             }
         }        
 
-        const url = "http://localhost:3000/logout"
+        url = url +  "/logout"
 
         const peticion = async () =>{
 

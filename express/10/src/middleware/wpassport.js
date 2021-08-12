@@ -86,9 +86,11 @@ class WPassport {
 
                     //Remember use secret for this
                     passport.use('facebook',new FacebookStrategy({
-                        clientID: process.env.FACEBOOK_CLIENTID,
-                        clientSecret: process.env.FACEBOOK_CLIENTS,
-                        callbackURL: process.env.FACEBOOK_CALLBACK,
+                        clientID: config.facebookid || process.env.FACEBOOK_CLIENTID,
+                        clientSecret: config.facebooksecret || process.env.FACEBOOK_CLIENTS,
+                        callbackURL: "http://localhost:"+config.server.port+"/auth/facebook/callback" || process.env.FACEBOOK_CALLBACK,
+                        profileFields: ['id', 'displayName', 'photos', 'emails'],
+                        scope: ['email']
                     },this.checkLoginFacebook));
 
                     this.enableLogin[item] = true;

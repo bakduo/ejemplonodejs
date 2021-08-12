@@ -9,7 +9,9 @@
 </div>
 <hr>
 <script>
+         
          setTimeout(function(){
-            window.location.href = 'http://localhost:3000/login';
+           let url = location.protocol + '//' + location.host;
+            window.location.href = url + "/login";
          }, 2000);
 </script> 

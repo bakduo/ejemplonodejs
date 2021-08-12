@@ -18,7 +18,14 @@
             {{user.displayName}} <br>
             {{user.profileUrl}} <br>
             {{#if user.photos}} <br>
-                {{user.photos}} <br>
+
+            {{#each user.photos}}
+                    
+                  <img alt="image" src="{{this.value}}" width="50" height="50" /> <br>
+
+            {{/each}}
+
+                
             {{else}} 
                 Sin foto <br>
             {{/if}}

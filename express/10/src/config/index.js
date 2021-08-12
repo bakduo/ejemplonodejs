@@ -23,8 +23,17 @@ const config = {
     dbsession: {},
     session:{},
     timesession:(oneMinute*10),
-    passportLogin: supportPassport
+    passportLogin: supportPassport,
+    facebookid:"",
+    facebooksecret:""
   };
+
+
+if (process.argv.length >= 5){
+  config.server.port = process.argv[2];
+  config.facebookid = process.argv[3];
+  config.facebooksecret = process.argv[4];
+}
 
 
   //Remember use Secret for this.

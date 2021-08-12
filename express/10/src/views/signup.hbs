@@ -35,7 +35,11 @@
     const password = document.getElementById("password");
     const singupButton = document.getElementById("singup");
 
+    
+
     singupButton.onclick = function login() {
+      let url = location.protocol + '//' + location.host;
+
         const options = {
             method: 'POST',
             body: JSON.stringify({
@@ -47,7 +51,8 @@
                 'Content-Type': 'application/json'
             }
         }
-        const url = "http://localhost:3000/signup"
+
+        url = url + "/signup";
 
         const peticion = async () =>{
 
