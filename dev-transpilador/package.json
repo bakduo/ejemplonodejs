@@ -1,0 +1,33 @@
+{
+  "name": "appexpress-14",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.es6.js",
+    "start-ts": "node src/server.ts",
+    "toes5": "node_modules/.bin/babel src --out-dir dist",
+    "run-es5": "node dist-babel/server.es6.js",
+    "ServerES6toJS5": "rm -rf dist && node_modules/.bin/babel src --out-dir dist && mv dist/server.es6.js dist/server.js && node dist/server.js",
+    "ServerTStoJS5": "rm -rf dist && node_modules/.bin/tsc && node dist/server.js"
+  },
+  "author": "Rodolfo",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.12",
+    "@types/node": "^15.12.4",
+    "babel-plugin-transform-es2015-modules-amd": "^6.24.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "socket.io": "^4.1.2",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "mocha": "^9.0.1"
+  }
+}

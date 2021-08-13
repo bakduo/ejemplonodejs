@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <%- include('./partials/header') -%>
+  </head>
+
+<body>
+
+    <div>
+    
+        <div class="container">
+
+                    
+        <center>
+            <h1>Listado de productos</h1>
+        </center>
+
+        <% if (state) { %>
+
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Foto</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                
+
+                <% if (productos) { %>
+                <% productos.forEach(function(producto) { %>
+                        <tr>
+                        <td><%= producto.title %></td>
+                        <td><%= producto.price %></td>
+                        <td>
+                            <img alt="image" src=<%= producto.thumbail %>
+                                width="50" height="50" />
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } %>
+
+            </tbody>
+        </table>
+
+        <% } else { %>
+
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Foto</th>
+
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <h1><center>No se encontrarón productos</center></h1>
+        <% } %>
+            
+        <a href="/addproducto" class="btn btn-primary btn-lg" role="button">Agregar producto</a>
+        <br>
+               
+    </div>
+
+    <%- include('./partials/complemento') -%>
+
+</body>
+
+</html>

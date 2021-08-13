@@ -1,0 +1,31 @@
+extends layouts/main.pug
+
+block content
+    center
+        h1="Listado de productos"
+    if !state
+        table(class="table")
+            thead(class="table-dark")
+                tr
+                    th(scopo="col")="Nombre"
+                    th(scopo="col")="Precio"
+                    th(scopo="col")="Foto"
+        center
+            h1="No se encontrarón productos"
+    else
+        table(class="table")
+            thead(class="table-dark")
+                tr
+                    th(scopo="col")="Nombre"
+                    th(scopo="col")="Precio"
+                    th(scopo="col")="Foto"
+            tbody
+                if productos
+                    each producto in productos
+                        tr
+                            td= producto.title
+                            td= producto.price
+                            td
+                                img(alt="image" src=producto.thumbail width="50" height="50")
+        
+        a(href="/addproducto" class="btn btn-primary btn-lg" role="button")="Agregar producto"
