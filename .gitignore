@@ -10,5 +10,6 @@ express/10/development.env
 express/10/sample.js
 express/10/public/index.html.old
 express/*/src/*.dev
+express/*/node_modules
 express/*/*.dev
 express/*/*.config
