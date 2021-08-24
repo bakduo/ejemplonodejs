@@ -13,3 +13,4 @@ express/*/src/*.dev
 express/*/node_modules
 express/*/*.dev
 express/*/*.config
+express/*/*/logs/*.log
