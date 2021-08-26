@@ -12,11 +12,17 @@
     "forever": "cross-env NODE_ENV='development' node_modules/.bin/forever --watchDirectory . bin/run.js",
     "pm2": "cross-env NODE_ENV='development' ./node_modules/.bin/pm2 start bin/run.js --name='server100' --watch --",
     "pm2cluster": "cross-env NODE_ENV='development' ./node_modules/.bin/pm2 start bin/run.js --name='server1' -i 2 --watch --",
-    "pm2-nginx": "cross-env NODE_ENV='development' ./launch.sh"
+    "pm2-nginx": "cross-env NODE_ENV='development' ./launch.sh",
+    "profiling": "NODE_ENV='development' node --prof bin/run.js",
+    "profiling-inspect": "NODE_ENV='development' node --inspect bin/run.js",
+    "profiling-flama": "NODE_ENV='development' node_modules/.bin/0x bin/run.js"
   },
   "author": "Rodolfo",
   "license": "ISC",
   "dependencies": {
+    "0x": "^4.11.0",
+    "artillery": "^1.7.7",
+    "autocannon": "^7.4.0",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
     "connect-mongo": "^4.4.1",

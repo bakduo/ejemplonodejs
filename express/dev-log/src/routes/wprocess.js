@@ -10,6 +10,8 @@ const controller = new WProcessController();
 
 routerProcess.get("/info",controller.getInfo);
 
+routerProcess.get("/infosinlog",controller.getInfoSinLog);
+
 routerProcess.get("/randoms",controller.getRandom);
 
 module.exports = routerProcess;

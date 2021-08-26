@@ -15,6 +15,7 @@ Example App Express with commonjs
 - [x] pm2
 - [x] cluster & fork
 - [x] nginx fake test, sample dev
+- [x] support profiling
 
 # Sample view
 
