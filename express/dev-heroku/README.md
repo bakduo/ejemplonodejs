@@ -12,8 +12,7 @@ Example App Express with commonjs
 - [x] add support passport login
 - [x] add support login facebook
 - [x] forever
-- [x] pm2
-- [x] cluster & fork
+- [x] fork
 - [x] nginx fake test, sample dev
 - [x] support profiling
 - [x] Heroku
