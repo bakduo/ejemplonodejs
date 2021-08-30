@@ -14,3 +14,5 @@ express/*/node_modules
 express/*/*.dev
 express/*/*.config
 express/*/*/logs/*.log
+express/*/*.sh
+express/*/src/util/db/*.db
