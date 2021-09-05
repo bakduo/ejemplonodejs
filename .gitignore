@@ -22,4 +22,6 @@ express/dev-kubernetes.zip
 express/dev-kubernetes/
 express/development.env
 express/development.json
+express/*/*.env
+express/*/*.js
 
