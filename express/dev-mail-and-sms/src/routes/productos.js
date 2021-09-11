@@ -8,11 +8,7 @@ const controller = new ProductoController();
 
 const CustomControl = require("../middleware/custom-control");
 
-const LoginFakeControl = require('../middleware/loginfake-control');
-
 const control3 = require('../middleware/fake-control');
-
-const control2 = new LoginFakeControl();
 
 const control = new CustomControl();
 

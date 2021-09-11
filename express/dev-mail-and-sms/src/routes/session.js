@@ -12,9 +12,8 @@ const repo = new SessionDAO(config.dbsession);
 
 const controller = new SessionController(repo);
 
-/******Control router*************/
 routerSession.get('/list', controller.list);
+
 routerSession.delete('/delete',controller.delete);
-/** ******************************* */
 
 module.exports = routerSession;
