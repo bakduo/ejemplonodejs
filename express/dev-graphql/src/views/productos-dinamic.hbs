@@ -1,0 +1,27 @@
+  <!-- As a heading -->
+    {{#if user}}
+    <nav class="navbar navbar-light bg-light">
+      <span class="navbar-brand mb-0 h1">Bienvenido {{user.username}}</span>
+      <form id="formLogin" class="form-inline">
+
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button"  onclick="logout()">Logout</button>
+
+      </form>
+    </nav>
+    {{/if}}
+
+ {{> add_producto}}
+
+
+      <div id="datos"></div>
+
+      <hr>
+
+{{> mensajes}}
+
+
+
+    <script src="/js/socket-oper.js" crossorigin="anonymous"></script>
+    
+    <script src="/js/process.js" crossorigin="anonymous"></script>
+
