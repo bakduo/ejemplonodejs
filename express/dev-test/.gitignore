@@ -1,0 +1,13 @@
+node_modules/
+package-lock.json
+sample.js
+*.env
+development.env
+logs/*.log
+*.log
+*.pdf
+*.doc
+*.docx
+*.odt
+profiling/
+*.zip

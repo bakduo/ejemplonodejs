@@ -24,4 +24,6 @@ express/development.env
 express/development.json
 express/*/*.env
 express/*/*.js
+express/*/config/*.json
+express/*/*.zip
 
