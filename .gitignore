@@ -28,4 +28,4 @@ express/*/config/*.json
 express/*/*.zip
 express/*/mochawesome-report/*
 express/*/entrega-configjson/
-
+express/*/db/*
