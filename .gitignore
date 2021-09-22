@@ -26,4 +26,6 @@ express/*/*.env
 express/*/*.js
 express/*/config/*.json
 express/*/*.zip
+express/*/mochawesome-report/*
+express/*/entrega-configjson/
 
