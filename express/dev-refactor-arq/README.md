@@ -20,6 +20,7 @@ Example App Express with commonjs
 - [x] support email notify
 - [x] support graphql
 - [x] add test productos unit
+- [x] add refector persistence
 
 # Sample view
 
