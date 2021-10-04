@@ -29,3 +29,4 @@ express/*/*.zip
 express/*/mochawesome-report/*
 express/*/entrega-configjson/
 express/*/db/*
+express/*/entrega-config/
