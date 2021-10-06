@@ -1,0 +1,89 @@
+Get all:
+
+query productos {
+  productos {
+    name,
+    thumbail,
+    price
+  }
+}
+
+
+Save:
+mutation save($name:String!,$price:Int!,$thumbail:String!){
+  save(name:$name,price:$price,thumbail:$thumbail){
+    ...productoFields
+  }
+}
+
+fragment productoFields on Producto {
+  name,
+  price,
+  thumbail
+}
+
+variables:
+{
+  "name":"a",
+  "price": 43434,
+  "thumbail": "sin dato"
+}
+
+GEt one:
+query producto($id:String!){
+  producto1:producto(id:$id){
+    ...productoFields
+  }
+}
+
+fragment productoFields on Producto{
+  name,
+  price,
+  thumbail
+}
+
+variables:
+{
+  "id":"cb0974d3b51feaeab89c4b53a1ba9a3b5758c986a0"
+}
+
+update :
+
+mutation update($id:String!,$name:String!,$price:Int!,$thumbail:String!){
+  update(id:$id,name:$name,price:$price,thumbail:$thumbail){
+    ...productoFields
+  }
+}
+
+fragment productoFields on Producto {
+  name,
+  price,
+  thumbail
+}
+
+{
+  "id":"306347609f375dd954477a4dcca7ddaa3231fa3c3f",
+  "name":"cambio",
+  "price": 22222,
+  "thumbail": "sin dato"
+}
+
+delete:
+
+mutation delete($id:String!){
+  delete(id:$id){
+    ...productoFields
+  }
+}
+
+fragment productoFields on Producto {
+  name,
+  price,
+  thumbail
+}
+
+{
+  "id":"306347609f375dd954477a4dcca7ddaa3231fa3c3f",
+}
+
+
