@@ -49,5 +49,5 @@ express/10/package-lock.json
 */*/*/*.env
 */*/*/production.json
 */*/*/development.json
-
+*/*/*/config/*.json
 
